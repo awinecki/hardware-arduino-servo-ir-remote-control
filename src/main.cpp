@@ -11,9 +11,11 @@ Servo servo;
 IRrecv irrecv(IR_RECV_PIN);
 decode_results ir_results;
 
-int servo_position = 1500;
-int micro_step = 35;
-int loop_delay = 10;
+int servo_position = 90;
+int servo_max = 170;
+int servo_min = 5;
+int micro_step = 12;
+int loop_delay = 15;
 boolean direction_up = true;
 
 void setup() {
@@ -54,13 +56,13 @@ void loop() {
     irrecv.resume(); // Receive the next value
   }
 
-  if (servo_position > 2100) {
-    servo_position = 2100;
-  } else if (servo_position < 900) {
-    servo_position = 900;
+  if (servo_position > servo_max) {
+    servo_position = servo_max;
+  } else if (servo_position < servo_min) {
+    servo_position = servo_min;
   }
 
-  servo.writeMicroseconds(servo_position);
+  servo.write(servo_position);
   delay(loop_delay);
 }
 
